@@ -28,9 +28,14 @@ def get_delay():
     user_input = {'query':query}
     pred = pipeline.predict(query)
     print(pred)
-    dic = {1:'real',0:'fake'}
-    return f'<html><body><h1>{dic[pred[0]]}</h1> <form action="/"> <button type="submit">back </button> </form></body></html>'
+#     dic = {1:'real',0:'fake'}
+#     return f'<html><body><h1>{dic[pred[0]]}</h1> <form action="/"> <button type="submit">back </button> </form></body></html>'
 
+    output = round(pred[0], 2)
+    if output == 1:
+        return render_template('index.html', prediction_text="Great! It's a real news!")
+    else:
+        return render_template('index.html', prediction_text="Sorry! It's a fake news.")
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
