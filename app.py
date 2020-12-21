@@ -1,7 +1,7 @@
-from flask import Flask, abort, jsonify, request, render_template
+# from sklearn.externals import joblib
+# import sklearn.external.joblib as extjoblib
 import joblib
-from feature import *
-import json
+from flask import Flask, request, render_template
 
 pipeline = joblib.load('./pipeline.sav')
 
@@ -12,6 +12,10 @@ def home():
     return render_template('index.html')
 
 
+def get_all_query(query_title, query_author, query_text):
+    pass
+
+
 @app.route('/api',methods=['POST'])
 def get_delay():
 
@@ -20,7 +24,7 @@ def get_delay():
     query_author = result['author']
     query_text = result['maintext']
     print(query_text)
-    query = [query_title] + [query_author] + [query_text]#get_all_query(query_title, query_author, query_text)
+    query = [query_title] + [query_author] + [query_text] #[query_text]#get_all_query(query_title, query_author, query_text)
     user_input = {'query':query}
     pred = pipeline.predict(query)
     print(pred)
